@@ -1,0 +1,217 @@
+﻿---
+layout: post
+title:  "jekyll"
+date:   2017-04-21 23:49:40 +0800
+categories: jekyll 
+---
+
+## > 前言
+最近决定要写一个博客，先后注册了博客园和CSND的博客，但是他们的界面主题都不是很符合自己的要求，还没有足够个性化的发挥空间，遂决定自己建一个博客。
+
+网上找了一下教程，感觉都不太详细，容易踩坑，所以就想详细一下自己的搭建过程，不能算作教程吧。
+希望大家踩少点，如有错误，各位看官老爷们拍轻点。
+
+既然选择了自己建一个，就需要选择一个合适自己用的博客引擎了，主要就这几大引擎：
+
+ - wordpress
+ - jekyll
+ - octopress
+ - hexo
+ - 还有FarBox和Ghost，这两个没有太多了解就不说了
+
+**wordpress：**
+老牌博客引擎，网上很多前人踩过的坑
+功能强大，需要服务器数据库，插件丰富，扩展功能方便
+搭建需要基本PHP和MySQL知识，搭建好后就傻瓜式操作
+wordpress相对臃肿，迁移麻烦
+
+**jekyll：**
+静态网页生成引擎，不需要数据库
+搭配github或gitcafe就可以不用自己的服务器
+用Ruby开发，需要基本GIT知识，支持markdown语法
+
+**octopress：**
+基于jekyll的静态网页生成引擎，类似于javascript和JQuery的关系，就是已经打包好了一些博客框架
+
+**hexo：**
+一样是静态网页生成引擎，不需要数据库
+搭配github或gitcafe就可以不用自己的服务器
+用node.js开发，作者是台湾大学生@tommy351
+相比jekyll，安装和命令更简单，生成速度更快
+同样需要基本GIT知识，支持markdown语法
+
+这个是作者的网站 [Zespia][1] 可以围观一下
+
+---
+只有最适合自己的，没有最好的，根据自己的需要选择，我这里据说jekyll比较能折腾（坑多），所以就选用了jekyll。
+
+我是在**window下搭建**的，所以linux和mac的老爷们就去下家看看吧。
+
+## > 配置环境
+
+ - 安装Ruby
+
+window要用 [Rubyinstaller][2] 安装（linux和mac可以直接在官网下载，因为Ruby对window不太友好）
+安装时把下面两个勾 勾上
+![安装Ruby][3]
+
+安装好后，运行cmd.exe，输入 `ruby -v`，出现版本号，则安装成功
+![安装测试][4]
+
+ - RubyGems
+
+用RubyInstaller安装Ruby之后都自带Gems的，有需要可以在这里下载 [RubyGems][5]
+
+ - 解压DEVELOPMENT KIT
+
+
+下载 [DEVELOPMENT KIT][6]，就在rubyinstaller下载页面的最下面。
+下载好后解压到随意位置
+![devKit][7]
+
+进入刚才解压的文件夹，空白处 Shift + 右键打开 命令窗口（cmd.exe），执行以下两条命令
+```
+ruby dk.rb init
+ruby dk.rb install
+```
+![此处输入图片的描述][8]
+
+如果安装的是64bit的Ruby，可能会报错，需要修改`dk.rb`文件
+用文本编辑器打开，在 `REG_KEYS`中添加一条：
+```ruby
+REG_KEYS = [
+'Software\RubyInstaller\MRI',
+'Software\RubyInstaller\Rubinius',
+'Software\Wow6432Node\RubyInstaller\MRI'
+]
+```
+![此处输入图片的描述][9]
+
+ - 换镜像源
+
+因为墙的问题，需要把原来的镜像源换了，我目前是用阿里云的镜像，有人用淘宝的，但我那时不行了，可能以后阿里云的也会失效。
+执行命令
+```
+gem sources --add http://mirrors.aliyun.com/rubygems/ --remove http://rubygems.org
+```
+![此处输入图片的描述][10]
+ 
+ - 升级Gem
+换了镜像后，执行命令：
+```
+gem update
+```
+然后等升级完成，这个步骤需要联网
+![此处输入图片的描述][11]
+
+ - 安装bundler
+
+更新完了，然后安装bundler，执行命令：
+```
+gem install bundler
+```
+![此处输入图片的描述][12]
+
+成功安装bundler后，bundler 也需要换镜像源
+![此处输入图片的描述][13]
+
+## > 安装Jekyll
+前面弄了这么就，终于可以入正题了，执行命令：
+```
+$ gem install jekyll
+```
+Jekyll需要的gem包都会自动安装
+![此处输入图片的描述][14]
+## > 创建博客站点
+打开你需要创建博客的目录下，比如我在E盘下创建，执行创建博客的命令，等待完成：
+```
+jekyll new yourBlogName
+```
+![此处输入图片的描述][15]
+
+## > 开启服务器
+创建完博客站点后，用`cd`命令进入博客的目录下，执行以下命令：
+```
+cd yourBlogName
+jekyll serve --watch
+```
+不加`--watch`则不会检测文件夹内的变化，修改文件后需要重新启动jekyll。
+![此处输入图片的描述][16]
+
+Jekyll服务器默认端口是4000，所以打开浏览器输入：[http://localhost:4000][17] 即可看到生成的博客页面。
+
+## > Jekyll目录结构
+　　Jekyll 的核心其实是一个文本转换引擎。它的概念其实就是： 你用你最喜欢的标记语言来写文章，可以是 Markdown，也可以是 Textile,或者就是简单的 HTML, 然后 Jekyll 就会帮你套入一个或一系列的布局中。
+　　在整个过程中你可以设置URL路径, 你的文本在布局中的显示样式等等。这些都可以通过纯文本编辑来实现，最终生成的静态页面就是你的成品了。
+
+一个基本的 Jekyll 网站的目录结构一般是像这样的：
+```
+blog
+	.sass-cache
+	_posts
+		2017-04-21-welcome-to-jekyll.markdown
+	_site
+	.gitignore
+	_config.yml
+	about.md
+	Gemfile.lock
+	Gemfile
+	index.md
+```
+根据实际需要，可能还需要创建如下文件或文件夹：
+1、 _includes:用于存放一些固定的HTML代码段，文件为.html格式，可以在模板中通过liquid标签引入，常用来在各个模板中复用如 导航条、标签栏、侧边栏 之类的在每个页面上都一样不变的内容，需要注意的是，这个代码段也可以是未被编译的，也就是说也可以使用liquid标签放在这些代码段中
+
+2、 image和js等自定义文件夹：用来存放一些需要的资源文件，如图片或者javascript文件，可以任意命名
+
+3、 CNAME文件：用来在github上做域名绑定的，将在后面介绍
+
+4、 favicon.ico：网站的小图标
+
+这些目录结构以及具体的作用可以参考 [官网文档][18]
+
+到此，博客初步搭建算是完成了
+## > 使用Jekyll写博文
+所有的文章都是放在` _posts` 目录下，文件格式为 mardown 格式，要注意文件名的格式前面必须为必须为 `年-月-日-文章名`，且最好不要用中文。
+
+此文件上的日期跟实际页面显示的日期没关系，页面的日期由YAML头信息中的date来决定（没有date时才由文件名决定）
+
+必须在文章头部添加YAML头信息（YAML front- matter）：
+```
+---
+layout: post
+title:  "Jekyll和Github搭建个人静态博客"
+date:   2016/6/26 13:03:42
+categories: original
+---
+
+正文...
+```
+
+ - layout表示使用post布局
+ - title 是文章标题
+ - date是自动生成的日期
+ 必须按照y-m-l的语法来写，否则就会出现编译错误，可以只用YYYY-MM-DD来显示日期在后面加上 HH:MM:SS+00:00 来表示更具体的时间
+ - categories
+   是该文章生成html文件后的存放目录，也就是文章的分类属性，可以在_site/original下找到。（category
+   只能添加一个分类属性， categories 可以添加多个分类属性，各属性使用空格隔开）
+
+　　
+
+  [1]: https://zespia.tw/
+  [2]: http://rubyinstaller.org/downloads/
+  [3]: http://oorg1sbrd.bkt.clouddn.com/1.png?imageslim
+  [4]: http://oorg1sbrd.bkt.clouddn.com/04-21%2021-23-43.png?imageslim
+  [5]: https://rubygems.org/pages/download
+  [6]: http://rubyinstaller.org/downloads/
+  [7]: http://oorg1sbrd.bkt.clouddn.com/04-21%2021-14-38.png?imageslim
+  [8]: http://oorg1sbrd.bkt.clouddn.com/004.png?imageslim
+  [9]: http://oorg1sbrd.bkt.clouddn.com/04-21%2022-09-22.png?imagesilm
+  [10]: http://oorg1sbrd.bkt.clouddn.com/005.png?imagesilm
+  [11]: http://oorg1sbrd.bkt.clouddn.com/006.png?imageslim
+  [12]: http://oorg1sbrd.bkt.clouddn.com/007.png?imageslim
+  [13]: http://oorg1sbrd.bkt.clouddn.com/008.png?imageslim
+  [14]: http://oorg1sbrd.bkt.clouddn.com/009.png?imageslim
+  [15]: http://oorg1sbrd.bkt.clouddn.com/013.png?imageslim
+  [16]: http://oorg1sbrd.bkt.clouddn.com/014.png?imageslim
+  [17]: http://localhost:4000
+  [18]: http://jekyll.com.cn/docs/structure/
