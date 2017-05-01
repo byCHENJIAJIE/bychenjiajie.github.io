@@ -2,7 +2,7 @@
 layout:     post
 title:      "关于beginPath()和closePath()的关系"
 subtitle:   "canvas的beginPath和closePath分析总结，包括多段弧的情况"
-date:       
+date:       2017-05-01 15:52:57
 author:     "cnblogs-妙音天女"
 header-img: "img/post-bg-2015.jpg"
 tags:
