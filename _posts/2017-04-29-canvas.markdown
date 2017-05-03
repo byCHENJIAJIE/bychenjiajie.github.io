@@ -1,0 +1,118 @@
+---
+layout:     post
+title:      "HTML5学习笔记之canvas"
+subtitle:   ""
+date:       2017-04-29 15:06:05
+author:     "Jacob"
+header-img: "img/post-bg-2015.jpg"
+tags:
+    - 前端学习
+    - HTML5
+---
+
+### 标签
+
+canvas标签有一个默认宽高：300*150；
+
+canvas的宽高一般写到行间样式中，写在style会有问题[详细请看这里](https://jacobbchan.github.io/2017/04/30/canvas-widthHeight/)；
+
+### 绘制环境
+
+要绘图先要获取到绘制环境：
+
+```js
+var oC = document.getElementsByTagName('canvas')[0];
+var oGC = oC.getContext('2d'); //有些浏览器支持webgl，可以绘制3D；
+```
+
+### 绘制方块
+
+- fillRect(Left,Top,Width,Height) : 填充方块，默认颜色黑色
+- strokeRect(Left,Top,Width,Height) : 带边框的方块，默认一像素的黑色边框 （默认下会渲染成两像素，[解决办法](https://jacobbchan.github.io/2017/05/01/canvas-strokeRect/)）
+
+在Context对象下使用：
+
+```js
+//接上面代码
+oGC.fillRect(50,50,100,100);
+oGC.strokeRect(50,50,100,100);
+```
+
+注意：绘制是有顺序的，后面的绘制会覆盖前面的。
+
+### 设置绘图
+
+- fillStyle : 填充颜色
+- lineWidth : 线宽度（数值）
+- strokeStyle : 边框颜色
+
+同样需要在Context对象下使用：
+
+```js
+//接上面代码
+oGC.fillStyle = 'red';
+oGC.strokeStyle = 'blue';
+oGC.lineWidth = 10;
+```
+
+### 边界绘制
+
+- lineJoin : 边界连接点样式
+- lineCap : 端点样式
+
+### 绘制路径
+
+- beginPath : 开始绘制路径
+- closePath : 结束绘制路径
+- moveTo : 移动到绘制的新目标点
+- lineTo : 新的目标点
+- stroke : 画线，默认黑色
+- fill : 填充，默认黑色
+- rect : 矩形区域
+- clearRect : 删除一个画布的矩形区域
+- save : 保存路径
+- restore : 恢复路径
+
+### 绘制圆
+
+- arc(x,y,半径,起始弧度,结束弧度,旋转方向)
+  - x,y ：起始位置
+
+### 绘制其他曲线
+
+- acrTo(x1,y1,x2,y2,r)
+  - 第一组坐标，第二组坐标，半径
+- quadraticCurveTo(dx,dy,x1,y1)
+  - 贝塞尔曲线：第一组控制点，第二组结束坐标
+- bezierCurveTo(dx1,dy1,dx2,dy2,x1,y1)
+  - 贝塞尔曲线：第一组控制点，第二组控制点，第三组结束坐标
+
+### 变换
+
+- translate : 偏移，从起始点为基准点，移动当前坐标位置
+- rotate : 旋转
+- scale : 缩放
+
+### 像素
+
+- createImageData(w,h) : 生成新的像素矩阵，初始值是全透明的黑色
+- putUmageData(要设置的图像数据,x,y) : 设置新的图像数据
+- getImageDate(x,y,w,h) : 获取图像数据
+  - getImageDate下的属性
+  - width : 一行的像素个数
+  - height : 一列的像素个数
+  - data : 一个数组，包含每个像素的rgba四个值，注意每个值都在0~255之间的整数
+
+### 合成
+
+- 全局阿尔法值：globalAlpha
+- 覆盖合成：globalCompositeOperation，它下面有一堆东西
+
+### 将画布导出为图像
+
+- toDataURL
+  - 火狐下右键可以直接导出成图片
+
+### 事件操作
+
+- isPointInPath：用来判断是否在点击范围内，只是针对最后绘制的图形 
