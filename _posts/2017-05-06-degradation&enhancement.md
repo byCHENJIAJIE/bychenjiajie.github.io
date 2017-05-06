@@ -4,7 +4,7 @@ title:      "到今天，需要遵循优雅降级和渐进增强吗 "
 subtitle:   "JavaScript DOM编程艺术的读书笔记"
 date:       2017-05-06 22:52:51
 author:     "Jacob"
-header-img: "/images.cnblogs.com/cnblogs_com/jacobb/997481/o_snipaste_20170506_230715.png/about/"
+header-img: "img/post-bg-2015.jpg"
 tags:
     - JavaScript
     - 读书笔记
